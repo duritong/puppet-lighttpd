@@ -17,8 +17,16 @@ class lighttpd::base {
     service{lighttpd:
         ensure => running,
         enable => true,
-        #hasstatus => true, #fixme!
+        hasstatus => true, 
         require => Package[lighttpd],
     }
 
+    file{'/etc/lighttpd/lighttpd.conf':
+        source => [ "puppet://$server/files/lighttpd/${fqdn}/lighttpd.conf",
+                    "puppet://$server/files/lighttpd/lighttpd.conf",
+                    "puppet://$server/lighttpd/lighttpd.conf" ],
+        require => Package['lighttpd'],
+        notify => Service['lighttpd'],
+        owner => root, group => 0, mode => 0644;
+    }
 }
