@@ -29,4 +29,13 @@ class lighttpd::base {
         notify => Service['lighttpd'],
         owner => root, group => 0, mode => 0644;
     }
+
+    # ToDo: put that in a common module to share with apache
+    file { 'default_lighttpd_index':
+        path => '/srv/www/lighttpd/index.html',
+        ensure => file,
+        content => template('lighttpd/default/default_index.erb'),
+        owner => root, group => 0, mode => 0644;
+    }
+
 }
