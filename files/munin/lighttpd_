@@ -5,8 +5,8 @@
 # immerda project group <admin+munin(at)immerda.ch>
 # GPLv3
 
-import sys
-kind = sys.argv[0].replace('lighttpd_', '')
+import sys, os
+kind = os.path.split(sys.argv[0])[1].replace('lighttpd_', '')
 if kind == "total_accesses":
 	graph_title = "Total Accesses"
 	graph_type = "DERIVE"
