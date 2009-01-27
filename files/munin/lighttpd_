@@ -11,18 +11,26 @@ if kind == "total_accesses":
 	graph_title = "Total Accesses"
 	graph_type = "DERIVE"
 	graph_vlabel = "Handled Requests"
+	graph_label = "requests"
+	graph_info = "Amount of handled requests"
 elif kind == "total_kbytes":
 	graph_title = "Total KBytes"
 	graph_type = "DERIVE"
 	graph_vlabel = "Transferred KBytes"
+	graph_label = "kbytes"
+	graph_info = "Amount of transferred KBytes"
 elif kind == "uptime":
 	graph_title = "Uptime"
 	graph_type = "DERIVE"
-	graph_vlabel = "uptime in seconds"
+	graph_vlabel = "Uptime in seconds"
+	graph_label = "uptime"
+	graph_info = "Uptime in secoonds"
 elif kind == "busyservers":
 	graph_title = "Busy Servers"
 	graph_type = "GAUGE"
-	graph_vlabel = "amount of busyservers"
+	graph_vlabel = "Amount of busyservers"
+	graph_label = "busyservers"
+	graph_info = "Amount of busyservers"
 
 
 if len(sys.argv) == 2 and sys.argv[1] == "autoconf":
@@ -32,6 +40,8 @@ elif len(sys.argv) == 2 and sys.argv[1] == "config":
         print 'graph_vlabel ' + graph_vlabel
         print 'graph_category lighttpd'
         print kind+'.type ' + graph_type
+        print kind+'.label ' + graph_label
+        print kind+'.info ' + graph_info
 
         print 'graph_args --base 1000'
 else:
