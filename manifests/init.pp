@@ -38,4 +38,7 @@ class lighttpd::base {
         owner => root, group => 0, mode => 0644;
     }
 
+    if $use_munin {
+        include lighttpd::munin
+    }
 }
