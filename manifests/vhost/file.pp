@@ -15,16 +15,16 @@ define lighttpd::vhost::file(
             File["/etc/lighttpd/vhosts.d/${name}.conf"]{
                 source => $vhost_source ? {
                   'absent'  => [
-                    "puppet://$server/modules/site-lighttpd/vhosts.d/$fqdn/$name.conf",
-                    "puppet://$server/modules/site-lighttpd/vhosts.d/$lighttpd_cluster_node/$name.conf",
-                    "puppet://$server/modules/site-lighttpd/vhosts.d/$operatingsystem.$lsbdistcodename/$name.conf",
-                    "puppet://$server/modules/site-lighttpd/vhosts.d/$operatingsystem/$name.conf",
-                    "puppet://$server/modules/site-lighttpd/vhosts.d/$name.conf",
-                    "puppet://$server/modules/lighttpd/vhosts.d/$operatingsystem.$lsbdistcodename/$name.conf",
-                    "puppet://$server/modules/lighttpd/vhosts.d/$operatingsystem/$name.conf",
-                    "puppet://$server/modules/lighttpd/vhosts.d/$name.conf"
+                    "puppet:///modules/site-lighttpd/vhosts.d/$fqdn/$name.conf",
+                    "puppet:///modules/site-lighttpd/vhosts.d/$lighttpd_cluster_node/$name.conf",
+                    "puppet:///modules/site-lighttpd/vhosts.d/$operatingsystem.$lsbdistcodename/$name.conf",
+                    "puppet:///modules/site-lighttpd/vhosts.d/$operatingsystem/$name.conf",
+                    "puppet:///modules/site-lighttpd/vhosts.d/$name.conf",
+                    "puppet:///modules/lighttpd/vhosts.d/$operatingsystem.$lsbdistcodename/$name.conf",
+                    "puppet:///modules/lighttpd/vhosts.d/$operatingsystem/$name.conf",
+                    "puppet:///modules/lighttpd/vhosts.d/$name.conf"
                   ],
-                  default => "puppet://$server/$vhost_source",
+                  default => "puppet:///$vhost_source",
               }
             }
         }

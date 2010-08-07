@@ -11,9 +11,9 @@ class lighttpd::base {
     }
 
     file{'/etc/lighttpd/lighttpd.conf':
-        source => [ "puppet://$server/modules/site-lighttpd/${fqdn}/lighttpd.conf",
-                    "puppet://$server/modules/site-lighttpd/lighttpd.conf",
-                    "puppet://$server/modules/lighttpd/lighttpd.conf" ],
+        source => [ "puppet:///modules/site-lighttpd/${fqdn}/lighttpd.conf",
+                    "puppet:///modules/site-lighttpd/lighttpd.conf",
+                    "puppet:///modules/lighttpd/lighttpd.conf" ],
         require => Package['lighttpd'],
         notify => Service['lighttpd'],
         owner => root, group => 0, mode => 0644;

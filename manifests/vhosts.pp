@@ -1,6 +1,6 @@
 class lighttpd::vhosts {
   file{'/etc/lighttpd/vhosts.d':
-    source => "puppet://$server/modules/common/empty",
+    source => "puppet:///modules/common/empty",
     ensure => directory,
     purge => true,
     recurse => true,
