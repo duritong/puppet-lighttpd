@@ -3,7 +3,12 @@ define lighttpd::config::file(
   $conf_source = 'absent',
   $content = 'absent'
 ){
-  file{"/etc/lighttpd/conf.d/${name}.conf":
+  $conf_dir = $operatingsystem ? {
+    debian => '/etc/lighttpd/conf-available',
+    ubuntu => '/etc/lighttpd/conf-available',
+    default => '/etc/lighttpd/conf.d'
+  }
+  file{"${conf_dir}/${name}.conf":
     ensure => $ensure,
     notify => Service['lighttpd'],
     owner => root, group => 0, mode => 0644;
@@ -11,7 +16,7 @@ define lighttpd::config::file(
 
   case $content {
     'absent': {
-      File["/etc/lighttpd/conf.d/${name}.conf"]{
+      File["${conf_dir}/${name}.conf"]{
         source => $conf_source ? {
           'absent'  => [
             "puppet:///modules/site-lighttpd/conf.d/$fqdn/$name.conf",
@@ -29,7 +34,7 @@ define lighttpd::config::file(
       }
     }
     default: {
-      File["/etc/lighttpd/conf.d/${name}.conf"]{
+      File["${conf_dir}/${name}.conf"]{
         content => $content,
       }
     }

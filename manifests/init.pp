@@ -4,6 +4,7 @@
 
 class lighttpd {
   case $operatingsystem {
+    debian,ubuntu: { include lighttpd::debian }
     default: { include lighttpd::base }
   }
 
