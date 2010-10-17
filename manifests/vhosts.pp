@@ -8,4 +8,10 @@ class lighttpd::vhosts {
     notify => Service['lighttpd'],
     owner => root, group => 0, mode => 0644;
   }
+
+  file{'/var/www/vhosts':
+    ensure => directory,
+    require => Package['lighttpd'],
+    owner => root, group => 0, mode => 0644;
+  }
 }
