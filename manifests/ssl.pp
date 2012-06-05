@@ -1,6 +1,6 @@
 class lighttpd::ssl inherits lighttpd {
   lighttpd::config::file{ 'ssl': }
-  if $use_shorewall {
+  if hiera('use_shorewall',false) {
     include shorewall::rules::https
   }
 }

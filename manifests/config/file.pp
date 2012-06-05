@@ -3,7 +3,7 @@ define lighttpd::config::file(
   $conf_source = 'absent',
   $content = 'absent'
 ){
-  $conf_dir = $operatingsystem ? {
+  $conf_dir = $::operatingsystem ? {
     debian => '/etc/lighttpd/conf-available',
     ubuntu => '/etc/lighttpd/conf-available',
     default => '/etc/lighttpd/conf.d'
@@ -19,15 +19,15 @@ define lighttpd::config::file(
       File["${conf_dir}/${name}.conf"]{
         source => $conf_source ? {
           'absent'  => [
-            "puppet:///modules/site-lighttpd/conf.d/$fqdn/$name.conf",
-            "puppet:///modules/site-lighttpd/conf.d/$lighttpd_cluster_node/$name.conf",
-            "puppet:///modules/site-lighttpd/conf.d/$operatingsystem.$lsbdistcodename/$name.conf",
-            "puppet:///modules/site-lighttpd/conf.d/$operatingsystem/$name.conf",
-            "puppet:///modules/site-lighttpd/conf.d/$name.conf",
-            "puppet:///modules/lighttpd/conf.d/$name.conf",
-            "puppet:///modules/lighttpd/conf.d/$operatingsystem.$lsbdistcodename/$name.conf",
-            "puppet:///modules/lighttpd/conf.d/$operatingsystem/$name.conf",
-            "puppet:///modules/lighttpd/conf.d/$name.conf"
+            "puppet:///modules/site_lighttpd/conf.d/${::fqdn}/${name}.conf",
+            "puppet:///modules/site_lighttpd/conf.d/${lighttpd::cluster_node}/${name}.conf",
+            "puppet:///modules/site_lighttpd/conf.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
+            "puppet:///modules/site_lighttpd/conf.d/${::operatingsystem}/${name}.conf",
+            "puppet:///modules/site_lighttpd/conf.d/${name}.conf",
+            "puppet:///modules/lighttpd/conf.d/${name}.conf",
+            "puppet:///modules/lighttpd/conf.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
+            "puppet:///modules/lighttpd/conf.d/${::operatingsystem}/${name}.conf",
+            "puppet:///modules/lighttpd/conf.d/${name}.conf"
           ],
         default => "puppet:///$conf_source",
         }
