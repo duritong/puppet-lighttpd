@@ -3,7 +3,9 @@
 # GPLv3
 
 class lighttpd(
-  $cluster_node = hiera('lighttpd_cluster_node','some_cluster_node')
+  $cluster_node,
+  $manage_munin     = false,
+  $manage_shorewall = false
 ) {
   case $::operatingsystem {
     debian,ubuntu: { include lighttpd::debian }
@@ -11,10 +13,10 @@ class lighttpd(
     default: { include lighttpd::base }
   }
 
-  if hiera('use_shorewall',false) {
+  if $lighthttpd::manage_shorewall {
     include shorewall::rules::http
   }
-  if hiera('use_munin',false) {
+  if $lighthttpd::manage_munin {
     include lighttpd::munin
   }
 }
