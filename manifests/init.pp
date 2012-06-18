@@ -3,7 +3,7 @@
 # GPLv3
 
 class lighttpd(
-  $cluster_node,
+  $cluster_node     = '',
   $manage_munin     = false,
   $manage_shorewall = false
 ) {
