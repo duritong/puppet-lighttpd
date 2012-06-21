@@ -13,10 +13,10 @@ class lighttpd(
     default: { include lighttpd::base }
   }
 
-  if $lighthttpd::manage_shorewall {
+  if $manage_shorewall {
     include shorewall::rules::http
   }
-  if $lighthttpd::manage_munin {
+  if $manage_munin {
     include lighttpd::munin
   }
 }
