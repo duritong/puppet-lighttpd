@@ -10,24 +10,26 @@ define lighttpd::vhost::file(
     owner => root, group => 0, mode => 0644;
   }
 
-  case $content {
-    'absent': {
-      File["/etc/lighttpd/vhosts.d/${name}.conf"]{
-        source => $vhost_source ? {
-          'absent'  => [
-            "puppet:///modules/site_lighttpd/vhosts.d/${::fqdn}/${name}.conf",
-            "puppet:///modules/site_lighttpd/vhosts.d/${lighttpd::cluster_node}/${name}.conf",
-            "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
-            "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}/${name}.conf",
-            "puppet:///modules/site_lighttpd/vhosts.d/${name}.conf"
-          ],
-          default => "puppet:///${vhost_source}",
+  if $ensure != 'absent' {
+    case $content {
+      'absent': {
+        File["/etc/lighttpd/vhosts.d/${name}.conf"]{
+          source => $vhost_source ? {
+            'absent'  => [
+              "puppet:///modules/site_lighttpd/vhosts.d/${::fqdn}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${lighttpd::cluster_node}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${name}.conf"
+            ],
+            default => "puppet:///${vhost_source}",
+          }
         }
       }
-    }
-    default: {
-      File["/etc/lighttpd/vhosts.d/${name}.conf"]{
-        content => $content,
+      default: {
+        File["/etc/lighttpd/vhosts.d/${name}.conf"]{
+          content => $content,
+        }
       }
     }
   }
