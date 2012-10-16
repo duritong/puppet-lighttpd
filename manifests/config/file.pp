@@ -1,17 +1,21 @@
+# manages a config file for lighty
 define lighttpd::config::file(
   $ensure = present,
   $conf_source = 'absent',
   $content = 'absent'
 ){
   $conf_dir = $::operatingsystem ? {
-    debian => '/etc/lighttpd/conf-available',
-    ubuntu => '/etc/lighttpd/conf-available',
+    debian  => '/etc/lighttpd/conf-available',
+    ubuntu  => '/etc/lighttpd/conf-available',
     default => '/etc/lighttpd/conf.d'
   }
   file{"${conf_dir}/${name}.conf":
-    ensure => $ensure,
-    notify => Service['lighttpd'],
-    owner => root, group => 0, mode => 0644;
+    ensure  => $ensure,
+    require => Package['lighttpd'],
+    notify  => Service['lighttpd'],
+    owner   => 'root',
+    group   => 0,
+    mode    => '0644';
   }
 
   case $content {
@@ -29,7 +33,7 @@ define lighttpd::config::file(
             "puppet:///modules/lighttpd/conf.d/${::operatingsystem}/${name}.conf",
             "puppet:///modules/lighttpd/conf.d/${name}.conf"
           ],
-        default => "puppet:///$conf_source",
+        default => "puppet:///${conf_source}",
         }
       }
     }
