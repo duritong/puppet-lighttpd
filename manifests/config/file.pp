@@ -4,7 +4,7 @@ define lighttpd::config::file(
   $conf_source = 'absent',
   $content = 'absent'
 ){
-  file{"${lighttpd::conf_dir_name}/${name}.conf":
+  file{"${lighttpd::conf_dir}/${name}.conf":
     ensure  => $ensure,
     require => Package['lighttpd'],
     notify  => Service['lighttpd'],
@@ -22,7 +22,7 @@ define lighttpd::config::file(
 
   case $content {
     'absent': {
-      File["${lighttpd::conf_dir_name}/${name}.conf"]{
+      File["${lighttpd::conf_dir}/${name}.conf"]{
         source => $conf_source ? {
           'absent'  => [
             "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${::fqdn}/${name}.conf",
@@ -40,7 +40,7 @@ define lighttpd::config::file(
       }
     }
     default: {
-      File["${lighttpd::conf_dir_name}/${name}.conf"]{
+      File["${lighttpd::conf_dir}/${name}.conf"]{
         content => $content,
       }
     }
