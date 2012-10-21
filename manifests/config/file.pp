@@ -15,7 +15,7 @@ define lighttpd::config::file(
 
   file_line{$name:
     ensure  => $ensure,
-    path    => "${lighttpd::conf_dir_name}/config.conf",
+    path    => "${lighttpd::conf_dir}/config.conf",
     line    => "include \"${lighttpd::conf_dir_name}/${name}.conf\"",
     notify  => Service['lighttpd'],
   }
