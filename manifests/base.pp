@@ -33,13 +33,6 @@ class lighttpd::base {
       owner   => 'root',
       group   => 0,
       mode    => '0644';
-    "${lighttpd::conf_dir}/config.conf":
-      ensure  => file,
-      require => Package['lighttpd'],
-      before  => Service['lighttpd'],
-      owner   => 'root',
-      group   => 0,
-      mode    => '0644';
     '/etc/cron.daily/clean_lighttpd_compress':
       content => "find /var/cache/lighttpd/compress -type f -mtime +10 | xargs -r rm\n",
       require => Package['lighttpd'],

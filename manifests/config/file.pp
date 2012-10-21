@@ -13,11 +13,15 @@ define lighttpd::config::file(
     mode    => '0644';
   }
 
-  file_line{$name:
-    ensure  => $ensure,
-    path    => "${lighttpd::conf_dir}/config.conf",
-    line    => "include \"${lighttpd::conf_dir_name}/${name}.conf\"",
-    notify  => Service['lighttpd'],
+  case $operatingsystem {
+    centos,redhat,fedora: {
+      file_line{$name:
+        ensure  => $ensure,
+        path    => "${lighttpd::conf_dir}/config.conf",
+        line    => "include \"${lighttpd::conf_dir_name}/${name}.conf\"",
+        notify  => Service['lighttpd'],
+      }
+    }
   }
 
   case $content {
