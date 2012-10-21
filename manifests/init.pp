@@ -7,6 +7,15 @@ class lighttpd(
   $manage_munin     = false,
   $manage_shorewall = false
 ) {
+
+  $conf_dir_name =  $::operatingsystem ? {
+    debian  => 'conf-available',
+    ubuntu  => 'conf-available',
+    default => 'conf.d'
+  }
+
+  $conf_dir = "/etc/lighttpd/${conf_dir_name}"
+
   case $::operatingsystem {
     debian,ubuntu: { include lighttpd::debian }
     centos,redhat,fedora: { include lighttpd::centos }

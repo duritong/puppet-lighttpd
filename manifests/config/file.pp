@@ -4,12 +4,7 @@ define lighttpd::config::file(
   $conf_source = 'absent',
   $content = 'absent'
 ){
-  $conf_dir = $::operatingsystem ? {
-    debian  => '/etc/lighttpd/conf-available',
-    ubuntu  => '/etc/lighttpd/conf-available',
-    default => '/etc/lighttpd/conf.d'
-  }
-  file{"${conf_dir}/${name}.conf":
+  file{"${lighttpd::conf_dir_name}/${name}.conf":
     ensure  => $ensure,
     require => Package['lighttpd'],
     notify  => Service['lighttpd'],
@@ -18,27 +13,34 @@ define lighttpd::config::file(
     mode    => '0644';
   }
 
+  file_line{$name:
+    ensure  => $ensure,
+    path    => "${lighttpd::conf_dir_name}/config.conf",
+    line    => "include \"${lighttpd::conf_dir_name}/${name}.conf\"",
+    notify  => Service['lighttpd'],
+  }
+
   case $content {
     'absent': {
-      File["${conf_dir}/${name}.conf"]{
+      File["${lighttpd::conf_dir_name}/${name}.conf"]{
         source => $conf_source ? {
           'absent'  => [
-            "puppet:///modules/site_lighttpd/conf.d/${::fqdn}/${name}.conf",
-            "puppet:///modules/site_lighttpd/conf.d/${lighttpd::cluster_node}/${name}.conf",
-            "puppet:///modules/site_lighttpd/conf.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
-            "puppet:///modules/site_lighttpd/conf.d/${::operatingsystem}/${name}.conf",
-            "puppet:///modules/site_lighttpd/conf.d/${name}.conf",
-            "puppet:///modules/lighttpd/conf.d/${name}.conf",
-            "puppet:///modules/lighttpd/conf.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
-            "puppet:///modules/lighttpd/conf.d/${::operatingsystem}/${name}.conf",
-            "puppet:///modules/lighttpd/conf.d/${name}.conf"
+            "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${::fqdn}/${name}.conf",
+            "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${lighttpd::cluster_node}/${name}.conf",
+            "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
+            "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${::operatingsystem}/${name}.conf",
+            "puppet:///modules/site_lighttpd/${lighttpd::conf_dir_name}/${name}.conf",
+            "puppet:///modules/lighttpd/${lighttpd::conf_dir_name}/${name}.conf",
+            "puppet:///modules/lighttpd/${lighttpd::conf_dir_name}/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
+            "puppet:///modules/lighttpd/${lighttpd::conf_dir_name}/${::operatingsystem}/${name}.conf",
+            "puppet:///modules/lighttpd/${lighttpd::conf_dir_name}/${name}.conf"
           ],
         default => "puppet:///${conf_source}",
         }
       }
     }
     default: {
-      File["${conf_dir}/${name}.conf"]{
+      File["${lighttpd::conf_dir_name}/${name}.conf"]{
         content => $content,
       }
     }
