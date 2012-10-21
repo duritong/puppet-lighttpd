@@ -1,7 +1,7 @@
 class lighttpd::munin {
   lighttpd::config::file{'status':
     content => 'server.modules += ( "mod_status" )
-$HTTP["remoteip"] == "127.0.0.1" {
+$HTTP["remoteip"] =~ "^(::ffff:)?127.0.0.1$" {
   status.status-url = "/server-status"
   status.config-url = "/server-config"
 }
