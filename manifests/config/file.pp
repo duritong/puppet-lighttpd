@@ -26,7 +26,7 @@ define lighttpd::config::file(
       $link_ensure = $ensure ? {
         'present' => 'link',
         default   => $ensure
-      },
+      }
       file{"/etc/lighttpd/conf-enabled/${name}.conf":
         ensure  => $link_ensure,
         target  => "${lighttpd::conf_dir}/${name}.conf",
