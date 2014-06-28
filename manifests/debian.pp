@@ -7,8 +7,4 @@ class lighttpd::debian inherits lighttpd::base {
       ensure => absent,
       require => Package['lighttpd'];
   }
-
-  Service['lighttpd']{
-    hasstatus => false,
-  }
 }
