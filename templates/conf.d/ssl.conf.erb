@@ -2,5 +2,6 @@ $SERVER["socket"] == ":443" {
      ssl.engine             = "enable"
      ssl.pemfile            = "<%= scope.lookupvar('lighttpd::ssl::ssl_pemfile') %>"
      ssl.use-sslv2          = "disable"
+     ssl.use-sslv3          = "disable"
      ssl.cipher-list        = "<%= scope.lookupvar('lighttpd::ssl::ssl_cipher') %>"
 }
