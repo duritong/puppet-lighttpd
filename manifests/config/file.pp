@@ -58,12 +58,12 @@ define lighttpd::config::file(
             }
           }
         }
-        true: {
+        true : {
           File["${lighttpd::conf_dir}/${name}.conf"] {
             content => template("${lighttpd::conf_dir_name}/${name}.conf")
           }
         }
-        default: {
+        default : {
           File["${lighttpd::conf_dir}/${name}.conf"] {
             content => template($template)
           }

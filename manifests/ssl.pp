@@ -11,7 +11,7 @@ class lighttpd::ssl(
     manage_shorewall => $manage_shorewall,
     manage_munin     => $manage_munin,
   }
-  lighttpd::config::file{ 'ssl':
+  lighttpd::config::file{'ssl':
     template => true
   }
   if $manage_shorewall {
