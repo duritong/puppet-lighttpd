@@ -19,4 +19,12 @@ class lighttpd::centos inherits lighttpd::base {
       group   => 'lighttpd',
       mode    => '0640';
   }
+
+  if str2bool($::selinux) {
+    selboolean{'httpd_setrlimit':
+      value      => 'on',
+      persistent => true,
+      before     => Service['lighttpd'],
+    }
+  }
 }
