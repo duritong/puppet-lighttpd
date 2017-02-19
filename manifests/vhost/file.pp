@@ -1,13 +1,16 @@
+# manage a simple vhost file
 define lighttpd::vhost::file(
-    $ensure = present,
-    $vhost_source = 'absent',
-    $content = 'absent'
+  $ensure       = present,
+  $vhost_source = 'absent',
+  $content      = 'absent'
 ){
   include ::lighttpd::vhosts
   file{"/etc/lighttpd/vhosts.d/${name}.conf":
     ensure => $ensure,
     notify => Service['lighttpd'],
-    owner => root, group => 0, mode => 0644;
+    owner  => root,
+    group  => 0,
+    mode   => '0644';
   }
 
   if $ensure != 'absent' {
