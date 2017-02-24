@@ -3,6 +3,7 @@ class lighttpd::ssl(
   $cluster_node     = $cluster_node,
   $manage_shorewall = false,
   $manage_munin     = false,
+  $socket           = ':443',
   $ssl_pemfile      = '/etc/ssl/private/lighttpd.pem',
   $ssl_cipher       = 'HIGH:MEDIUM:!aNULL:!SSLv2:@STRENGTH'
 ) {
