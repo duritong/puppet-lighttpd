@@ -1,6 +1,6 @@
 # ssl enabled lighttpd
 class lighttpd::ssl(
-  $cluster_node     = $cluster_node,
+  $cluster_node     = '',
   $manage_shorewall = false,
   $manage_munin     = false,
   $socket           = ':443',
