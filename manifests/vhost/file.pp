@@ -19,10 +19,10 @@ define lighttpd::vhost::file(
         File["/etc/lighttpd/vhosts.d/${name}.conf"]{
           source => $vhost_source ? {
             'absent'  => [
-              "puppet:///modules/site_lighttpd/vhosts.d/${::fqdn}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${facts['fqdn']}/${name}.conf",
               "puppet:///modules/site_lighttpd/vhosts.d/${lighttpd::cluster_node}/${name}.conf",
-              "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}.${::lsbdistcodename}/${name}.conf",
-              "puppet:///modules/site_lighttpd/vhosts.d/${::operatingsystem}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${facts['os']['name']}.${facts['os']['release']['major']}/${name}.conf",
+              "puppet:///modules/site_lighttpd/vhosts.d/${facts['os']['name']}/${name}.conf",
               "puppet:///modules/site_lighttpd/vhosts.d/${name}.conf"
             ],
             default => "puppet:///${vhost_source}",
