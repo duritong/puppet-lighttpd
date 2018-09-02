@@ -23,7 +23,7 @@ define lighttpd::vhost::file(
               "puppet:///modules/site_lighttpd/vhosts.d/${lighttpd::cluster_node}/${name}.conf",
               "puppet:///modules/site_lighttpd/vhosts.d/${facts['os']['name']}.${facts['os']['release']['major']}/${name}.conf",
               "puppet:///modules/site_lighttpd/vhosts.d/${facts['os']['name']}/${name}.conf",
-              "puppet:///modules/site_lighttpd/vhosts.d/${name}.conf"
+              "puppet:///modules/site_lighttpd/vhosts.d/${name}.conf",
             ],
             default => "puppet:///${vhost_source}",
           }
